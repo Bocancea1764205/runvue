@@ -26,7 +26,6 @@ app.use(
     extended: true,
   })
 );
-
 const authRoutes = require("./routes/authRoutes");
 app.use(authRoutes);
 
