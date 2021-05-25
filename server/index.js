@@ -4,6 +4,14 @@ if (process.env.NODE_ENV !== "production") {
 const path = require("path");
 const express = require("express");
 const app = express();
+/*const cors = require("cors");
+app.use(
+  cors({
+    origin: "http://localhost:8081",
+    credentials: true,
+    "Access-Control-Allow-Origin": "*",
+  })
+);*/
 
 const { checkUser } = require("./middleware/authMiddleware");
 
@@ -18,6 +26,7 @@ app.use(
     extended: true,
   })
 );
+
 const authRoutes = require("./routes/authRoutes");
 app.use(authRoutes);
 
@@ -49,11 +58,11 @@ mongoose
 
 const User = require("./models/User");
 
-app.get("*", checkUser); //utilizza su tutte le location il middleware checkUser per verificare se c'è un token dell'user ed è verificato, così da poter vedere i suoi dati dinamicamente (se ce ne sono)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(__dirname + "/public/"));
-  app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
-}
+app.get("/api", checkUser);
+//if (process.env.NODE_ENV === "production") {
+app.use(express.static(__dirname + "/public/"));
+app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
+//}
 
 app.listen(process.env.PORT, () => {
   console.log("Server is running on %s port", process.env.PORT || 3000);
