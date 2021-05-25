@@ -4,14 +4,6 @@ if (process.env.NODE_ENV !== "production") {
 const path = require("path");
 const express = require("express");
 const app = express();
-const cors = require("cors");
-app.use(
-  cors({
-    origin: "http://localhost:8080",
-    credentials: true,
-    "Access-Control-Allow-Origin": "*",
-  })
-);
 
 const { checkUser } = require("./middleware/authMiddleware");
 
