@@ -29,10 +29,6 @@ module.exports.signup_post = async (req, res) => {
     });
     console.log("User created successfully: ", user);
     const token = createToken(user._id);
-    res.cookie("jwt", token, {
-      httpOnly: process.env.NODE_ENV !== "production" ? true : false,
-      maxAge: maxAge * 1000,
-    });
     res.status(200).json({ success: true, jwt: token });
   } catch (error) {
     if (error.code === 11000) {
@@ -48,10 +44,6 @@ module.exports.login_post = async (req, res) => {
   try {
     const user = await User.login(username, password);
     const token = createToken(user._id);
-    res.cookie("jwt", token, {
-      httpOnly: process.env.NODE_ENV !== "production" ? true : false,
-      maxAge: maxAge * 1000,
-    });
     console.log(token);
     res.status(200).json({ success: true, jwt: token });
   } catch (error) {

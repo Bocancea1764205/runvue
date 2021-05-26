@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
-const cookieParser = require("cookie-parser");
 
 router.use(express.json());
 router.use(
@@ -9,8 +8,6 @@ router.use(
     extended: true,
   })
 );
-
-router.use(cookieParser());
 
 const { checkUser } = require("../middleware/authMiddleware");
 
