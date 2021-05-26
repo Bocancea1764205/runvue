@@ -1,0 +1,4 @@
+{
+    "vetur.format.defaultFormatter.html": "prettyhtml",
+    "editor.defaultFormatter": "octref.vetur"
+}
