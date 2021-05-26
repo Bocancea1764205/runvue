@@ -19,8 +19,8 @@ router.get("/api/logout", authController.logout_get);
 
 router.get("/api/forgotPassword", authController.forgot_password_get);
 router.post("/api/forgotPassword", authController.forgot_password_post);
-router.get("/resetPassword/:token", authController.reset_password_get);
-router.patch("/resetPassword/:token", authController.reset_password_patch);
+router.get("/api/resetPassword/:token", authController.reset_password_get);
+router.patch("/api/resetPassword/:token", authController.reset_password_patch);
 
 router.patch(
   "/api/updatePassword",

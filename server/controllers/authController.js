@@ -66,7 +66,7 @@ module.exports.forgot_password_post = async (req, res) => {
       console.log(JSON.stringify(resetToken));
       const resetURL = `${
         process.env.NODE_ENV !== "production" ? "http" : "https"
-      }://${req.get("host")}/resetPassword/${resetToken}`;
+      }://${req.get("host")}/api/resetPassword/${resetToken}`;
       const from = `bocancea.1764205@studenti.uniroma1.it`;
       const to = user.email;
       const subject = "RUNATON ACCOUNT RESET PASSWORD";
