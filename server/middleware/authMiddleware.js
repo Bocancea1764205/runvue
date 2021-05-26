@@ -6,7 +6,13 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const checkUser = (req, res, next) => {
-  const token = req.cookies.jwt;
+  let token;
+  if (req.headers.authorization.startsWith("Bearer ")) {
+    token = req.headers.authorization.substring(
+      7,
+      req.headers.authorization.length
+    );
+  }
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
       if (err) {
