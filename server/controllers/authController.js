@@ -14,10 +14,6 @@ const createToken = (id) => {
   });
 };
 
-module.exports.signup_get = (req, res) => {};
-
-module.exports.login_get = (req, res) => {};
-
 module.exports.signup_post = async (req, res) => {
   console.log(req.body);
   const { username, email, password } = req.body;
@@ -51,12 +47,6 @@ module.exports.login_post = async (req, res) => {
   }
 };
 
-module.exports.logout_get = async (req, res) => {
-  res.status(200).json({ success: true });
-};
-
-module.exports.forgot_password_get = async (req, res) => {};
-
 module.exports.forgot_password_post = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -66,7 +56,7 @@ module.exports.forgot_password_post = async (req, res) => {
       console.log(JSON.stringify(resetToken));
       const resetURL = `${
         process.env.NODE_ENV !== "production" ? "http" : "https"
-      }://${req.get("host")}/api/resetPassword/${resetToken}`;
+      }://${req.get("host")}/resetPassword/${resetToken}`;
       const from = `bocancea.1764205@studenti.uniroma1.it`;
       const to = user.email;
       const subject = "RUNATON ACCOUNT RESET PASSWORD";
@@ -81,8 +71,6 @@ module.exports.forgot_password_post = async (req, res) => {
     res.json({ error: "errore email" });
   }
 };
-
-module.exports.reset_password_get = async (req, res) => {};
 
 module.exports.reset_password_patch = async (req, res) => {
   const { password } = req.body;
