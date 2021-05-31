@@ -17,7 +17,7 @@ const checkUser = (req, res, next) => {
     jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
       if (err) {
         console.log(err.message);
-        next();
+        res.status(400);
       } else {
         let user = await User.findById(decodedToken.id);
         return res.status(200).json({
@@ -26,7 +26,7 @@ const checkUser = (req, res, next) => {
       }
     });
   } else {
-    res.status(404).json({});
+    res.status(404);
   }
 };
 
