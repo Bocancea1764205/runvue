@@ -18,15 +18,20 @@ const checkUser = (req, res, next) => {
       if (err) {
         console.log(err.message);
         res.status(400);
+        next()
       } else {
         let user = await User.findById(decodedToken.id);
         return res.status(200).json({
-          user,
+          user: {
+            email: user.email,
+            username: user.username,
+          }
         });
       }
     });
   } else {
     res.status(404);
+    next()
   }
 };
 
