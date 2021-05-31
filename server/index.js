@@ -85,7 +85,7 @@ app.post("/api/run", async (req, res) => {
           await run.save();
           console.log(run);
           console.log("giusto");
-          return res.status(200);
+          return res.status(200).json({});
         }
       });
     } else {
