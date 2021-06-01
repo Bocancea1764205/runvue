@@ -3,7 +3,7 @@
     <v-app-bar color="deep-orange" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Runaton!</v-toolbar-title>
+      <v-toolbar-title>Runaton</v-toolbar-title>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -70,7 +70,7 @@
           <v-list-item v-if="authenticated">
             <v-switch
               v-model="$vuetify.theme.dark"
-              hint="Questo pulsante abilità la modalità scura"
+              hint="Scorri a destra per abilitare la Dark Mode"
               inset
               label="Dark Mode"
               persistent-hint
@@ -83,28 +83,28 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-export default {
-  data: () => ({
-    drawer: false,
-    group: null,
-  }),
-  computed: {
-    ...mapGetters({
-      authenticated: "auth/authenticated",
-      user: "auth/user",
+  import { mapGetters, mapActions } from "vuex";
+  export default {
+    data: () => ({
+      drawer: false,
+      group: null,
     }),
-  },
-  methods: {
-    ...mapActions({
-      logOutAction: "auth/logOut",
-    }),
-    logOut() {
-      this.logOutAction().then(() => {
-        if (!(this.$route.name === "Home"))
-          this.$router.replace({ name: "Home" });
-      });
+    computed: {
+      ...mapGetters({
+        authenticated: "auth/authenticated",
+        user: "auth/user",
+      }),
     },
-  },
-};
+    methods: {
+      ...mapActions({
+        logOutAction: "auth/logOut",
+      }),
+      logOut() {
+        this.logOutAction().then(() => {
+          if (!(this.$route.name === "Home"))
+            this.$router.replace({ name: "Home" });
+        });
+      },
+    },
+  };
 </script>
