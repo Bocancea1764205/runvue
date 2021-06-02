@@ -8,7 +8,6 @@
         <v-text-field
           type="text"
           v-model="form.username"
-          :rules="nameRules"
           label="Username"
           required
         ></v-text-field>
@@ -16,7 +15,6 @@
         <v-text-field
           type="password"
           v-model="form.password"
-          :rules="pwRules"
           label="Password"
           required
         ></v-text-field>
@@ -45,12 +43,16 @@ export default {
   name: "Login",
   data: () => {
     return {
+      valid: false,
       form: {
         username: "",
         password: "",
       },
       error: "",
     };
+  },
+  mounted() {
+    this.valid = false;
   },
   computed: {
     ...mapGetters({
