@@ -69,6 +69,18 @@ export default {
         return this.stopTracking();
       }
     },
+    realtime_meters: function(meters) {
+      let realtime = Math.floor(meters);
+      if (realtime >= 1000) {
+        return `${(realtime / 1000).toFixed(3)} km`;
+      } else if (realtime > 1) {
+        return `${realtime} metri`;
+      } else if (realtime === 1) {
+        return `1 metro`;
+      } else {
+        return `0 metri`;
+      }
+    },
   },
   computed: {
     ...mapGetters({
@@ -128,7 +140,7 @@ export default {
         ]);
         if (lastTwoCoordinates.length > 1) {
           this.meters += this.realtimeMeters(lastTwoCoordinates);
-          this.realtimeMetersPrint(this.meters);
+          this.realtime_meters(this.meters);
           lastTwoCoordinates.shift();
           console.log(this.meters);
         }
@@ -216,18 +228,6 @@ export default {
         return puntoA.distanceTo(puntoB);
       }
       return 0;
-    },
-    realtimeMetersPrint: function(meters) {
-      let realtime_meters = Math.floor(meters);
-      if (realtime_meters >= 1000) {
-        this.realtime_meters = `${(realtime_meters / 1000).toFixed(3)} km`;
-      } else if (realtime_meters > 1) {
-        this.realtime_meters = `${realtime_meters} metri`;
-      } else if (realtime_meters === 1) {
-        this.realtime_meters = `1 metro`;
-      } else {
-        this.realtime_meters = `0 metri`;
-      }
     },
   },
 };
