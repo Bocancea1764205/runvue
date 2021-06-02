@@ -55,6 +55,12 @@ export default {
     this.map = "";
     this.realtime_meters = "";
   },
+  mounted() {
+    this.soglia = 0;
+    this.meters = 0;
+    this.map = "";
+    this.realtime_meters = "";
+  },
   watch: {
     startedStopwatch: function(value) {
       if (value) {
@@ -194,7 +200,7 @@ export default {
       }
     },
     //**********************Realtime Meters*******************/
-    realtimeMeters(lastTwoCoordinates) {
+    realtimeMeters: function(lastTwoCoordinates) {
       if (
         lastTwoCoordinates[0][0] !== lastTwoCoordinates[1][0] &&
         lastTwoCoordinates[0][1] !== lastTwoCoordinates[1][1]
@@ -211,7 +217,7 @@ export default {
       }
       return 0;
     },
-    realtimeMetersPrint(meters) {
+    realtimeMetersPrint: function(meters) {
       let realtime_meters = Math.floor(meters);
       if (realtime_meters >= 1000) {
         this.realtime_meters = `${(realtime_meters / 1000).toFixed(3)} km`;
@@ -228,6 +234,9 @@ export default {
 </script>
 
 <style lang="css">
+#app {
+  text-align: center;
+}
 @import "https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css";
 *:focus {
   outline: none;
