@@ -2,6 +2,7 @@
   <v-app>
     <h1 class="text-center">Login</h1>
     <v-divider></v-divider>
+    <br />
     <v-container>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field

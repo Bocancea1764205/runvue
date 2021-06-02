@@ -2,6 +2,7 @@
   <v-app>
     <h1 class="text-center">Il mio archivio</h1>
     <v-divider></v-divider>
+    <br />
     <v-container spacing-playground pa-3>
       <div>
         <v-expansion-panels>

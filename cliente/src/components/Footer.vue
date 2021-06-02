@@ -21,7 +21,7 @@
       </v-card-text>
 
       <v-card-text class="deep-orange py-2 white--text text-center">
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+        {{ new Date().getFullYear() }} — <strong>Runaton</strong>
       </v-card-text>
     </v-card>
   </v-footer>

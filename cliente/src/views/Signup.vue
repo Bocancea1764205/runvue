@@ -2,6 +2,7 @@
   <v-app>
     <h1 class="text-center">Signup</h1>
     <v-divider></v-divider>
+    <br />
     <v-container>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field
@@ -36,14 +37,13 @@
           label="Do you agree?"
           required
         ></v-checkbox>
-
         <v-btn
           :disabled="!valid"
           color="success"
           class="mr-4"
           @click="
-            submit;
-            validate;
+            validate();
+            submit();
           "
           ><v-icon dark left> mdi-account-plus-outline </v-icon>Signup</v-btn
         >
@@ -72,7 +72,7 @@ export default {
         (v) => !!v || "Username obbligatorio",
         (v) =>
           (v && v.length <= 10) ||
-          "Username deve contenere meno di 5 caratteri",
+          "Username deve contenere meno di 10 caratteri",
       ],
       emailRules: [
         (v) => !!v || "E-mail obbligatoria",
@@ -83,11 +83,12 @@ export default {
         (v) =>
           (v && v.length <= 15) ||
           "Password deve contenere meno di 15 caratteri",
-        (v) => /(?=.*[A-Z])/.test(v) || "Password deve avere una maiuscola",
-        (v) => /(?=.*\d)/.test(v) || "Password deve avere un numero",
+        (v) =>
+          /(?=.*[A-Z])/.test(v) || "Password deve avere almeno una maiuscola",
+        (v) => /(?=.*\d)/.test(v) || "Password deve avere almeno un numero",
         (v) =>
           /([!@$%])/.test(v) ||
-          "Password deve avere un carattere speciale [!@#$%]",
+          "Password deve avere almeno un carattere speciale [!@#$%]",
       ],
       select: null,
       checkbox: false,
@@ -109,14 +110,14 @@ export default {
       signUp: "auth/signUp",
     }),
     submit() {
-      this.logIn(this.form).then(() => {
+      this.signUp(this.form).then(() => {
         if (this.authenticated) this.$router.replace({ name: "Run" });
       });
     },
-    validate() {
+    validate: function() {
       this.$refs.form.validate();
     },
-    reset() {
+    reset: function() {
       this.$refs.form.reset();
     },
   },
