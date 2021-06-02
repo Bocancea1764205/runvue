@@ -98,7 +98,7 @@ export default {
         alert('Cancellato con successo!')
       } catch (e) {
         console.log(e)
-        alert('La cancellazione non è andata a buon!')
+        alert('La cancellazione non è andata a buon fine!')
         commit("SET_TOKEN", null);
         commit("SET_USER", null);
         commit("SET_ARCHIVE", null);

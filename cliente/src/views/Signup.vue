@@ -1,60 +1,64 @@
 <template>
-  <v-container>
-    <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field
-        type="text"
-        v-model="form.username"
-        :counter="10"
-        :rules="nameRules"
-        label="Username"
-        required
-      ></v-text-field>
+  <v-app>
+    <h1 class="text-center">Signup</h1>
+    <v-divider></v-divider>
+    <v-container>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-text-field
+          type="text"
+          v-model="form.username"
+          :counter="10"
+          :rules="nameRules"
+          label="Username"
+          required
+        ></v-text-field>
 
-      <v-text-field
-        type="email"
-        v-model="form.email"
-        :rules="emailRules"
-        label="E-mail"
-        required
-      ></v-text-field>
+        <v-text-field
+          type="email"
+          v-model="form.email"
+          :rules="emailRules"
+          label="E-mail"
+          required
+        ></v-text-field>
 
-      <v-text-field
-        type="password"
-        v-model="form.password"
-        :counter="15"
-        :rules="pwRules"
-        label="Password"
-        required
-      ></v-text-field>
+        <v-text-field
+          type="password"
+          v-model="form.password"
+          :counter="15"
+          :rules="pwRules"
+          label="Password"
+          required
+        ></v-text-field>
 
-      <v-checkbox
-        v-model="checkbox"
-        :rules="[(v) => !!v || 'Devi accettare per continuare!']"
-        label="Do you agree?"
-        required
-      ></v-checkbox>
+        <v-checkbox
+          v-model="checkbox"
+          :rules="[(v) => !!v || 'Devi accettare per continuare!']"
+          label="Do you agree?"
+          required
+        ></v-checkbox>
 
-      <v-btn
-        :disabled="!valid"
-        color="success"
-        class="mr-4"
-        @click="
-          submit;
-          validate;
-        "
-        ><v-icon dark left> mdi-account-plus-outline </v-icon>Signup</v-btn
-      >
-      <v-btn color="error" class="mr-4" @click="reset"
-        ><v-icon dark left> mdi-close-box-outline </v-icon>Reset Signup</v-btn
-      >
-      <br />
-      <br />
-      <router-link to="/forgotPassword">Password dimenticata?</router-link>
-      <br />
-      <router-link to="/login">Hai già un account? Fai il login!</router-link>
-      {{ error }}
-    </v-form>
-  </v-container>
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          @click="
+            submit;
+            validate;
+          "
+          ><v-icon dark left> mdi-account-plus-outline </v-icon>Signup</v-btn
+        >
+        <v-btn color="error" class="mr-4" @click="reset"
+          ><v-icon dark left> mdi-close-box-outline </v-icon>Reset Signup</v-btn
+        >
+        <br />
+        <br />
+        <router-link to="/forgotPassword">Password dimenticata?</router-link>
+        <br />
+        <router-link to="/login">Hai già un account? Fai il login!</router-link>
+        {{ error }}
+      </v-form>
+    </v-container>
+  </v-app>
 </template>
 
 <script>

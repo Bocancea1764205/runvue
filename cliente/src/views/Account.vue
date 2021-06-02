@@ -1,10 +1,9 @@
 <template>
   <v-app>
     <div v-if="authenticated">
-      Username account: {{ user.email }}
-      <br />
-      Email account: {{ user.email }}
+      <h1 class="text-center">Il mio account</h1>
     </div>
+    <v-divider></v-divider>
   </v-app>
 </template>
 <script>
