@@ -1,5 +1,8 @@
 <template>
-  <div>HOME</div>
+  <v-app>
+    <h1 class="text-center">Runaton - Simple run tracker</h1>
+    <v-divider></v-divider>
+  </v-app>
 </template>
 <script>
 import { mapGetters } from "vuex";
