@@ -26,7 +26,7 @@
       color="info"
       >Resetta</v-btn
     >
-    <div v-show="meters > 0">{{ realtime_meters }}</div>
+    <div>{{ realtimemeters }}</div>
   </v-app>
 </template>
 
@@ -46,20 +46,20 @@ export default {
   data: () => ({
     soglia: "",
     meters: "",
-    realtime_meters: "",
     map: "",
+    realtimemeters: "",
   }),
   created() {
     this.soglia = 0;
     this.meters = 0;
     this.map = "";
-    this.realtime_meters = "";
+    this.realtimemeters = "";
   },
   mounted() {
     this.soglia = 0;
     this.meters = 0;
     this.map = "";
-    this.realtime_meters = "";
+    this.realtimemeters = "";
   },
   watch: {
     startedStopwatch: function(value) {
@@ -67,18 +67,6 @@ export default {
         return this.trackPosition();
       } else {
         return this.stopTracking();
-      }
-    },
-    realtime_meters: function(meters) {
-      let realtime = Math.floor(meters);
-      if (realtime >= 1000) {
-        return `${(realtime / 1000).toFixed(3)} km`;
-      } else if (realtime > 1) {
-        return `${realtime} metri`;
-      } else if (realtime === 1) {
-        return `1 metro`;
-      } else {
-        return `0 metri`;
       }
     },
   },
@@ -140,7 +128,7 @@ export default {
         ]);
         if (lastTwoCoordinates.length > 1) {
           this.meters += this.realtimeMeters(lastTwoCoordinates);
-          this.realtime_meters(this.meters);
+          this.realtimemeters = this.realtime_meters(this.meters);
           lastTwoCoordinates.shift();
           console.log(this.meters);
         }
@@ -228,6 +216,18 @@ export default {
         return puntoA.distanceTo(puntoB);
       }
       return 0;
+    },
+    realtime_meters: function(meters) {
+      let formatted = Math.floor(meters);
+      if (formatted >= 1000) {
+        return `${(formatted / 1000).toFixed(3)} km`;
+      } else if (formatted > 1) {
+        return `${formatted} metri`;
+      } else if (formatted === 1) {
+        return `1 metro`;
+      } else {
+        return `0 metri`;
+      }
     },
   },
 };
