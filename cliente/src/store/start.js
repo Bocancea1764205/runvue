@@ -1,3 +1,5 @@
+import store from "../store";
+import axios from "axios";
 export default {
   namespaced: true,
   state: {
@@ -61,7 +63,13 @@ export default {
       commit("CHANGE_STATUS_STOPWATCH");
     },
     async saveRun({ commit }, data) {
-      fetch("api/run", {
+      try {
+        let response = await axios.post("api/archive", data)
+        store.commit("auth/SET_ARCHIVE", response.data.archive)
+      } catch (err) {
+        alert(err.response.data.error)
+      }
+      /*let result = await fetch("api/archive", {
         method: "POST",
         credentials: 'include',
         headers: {
@@ -73,8 +81,11 @@ export default {
           path: Object.values(data.path),
           time: data.time,
           date: data.date,
-        }),
-      })
+        })
+      }).then((res) => { console.log(res); res.json() })
+      console.log(result)
+      console.log(result)
+      store.commit("auth/SET_ARCHIVE", result.archive)*/
       commit("RESET_STATUS_ALL", null);
     },
     async reset({ commit }) {

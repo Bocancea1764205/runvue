@@ -25,12 +25,12 @@ module.exports.signup_post = async (req, res) => {
     });
     console.log("User created successfully: ", user);
     const token = createToken(user._id);
-    res.status(200).json({ success: true, jwt: token });
+    res.json({ status: 'ok', jwt: token });
   } catch (error) {
     if (error.code === 11000) {
-      return res.status(400).json({ error: "Username già in uso" });
+      return res.json({ status: 'error', error: 'Username already in use' });
     } else {
-      return res.status(400).json({ error: "Errore registrazione utente" });
+      return res.json({ status: 'error', error: 'Username already in use' });
     }
   }
 };
@@ -54,9 +54,8 @@ module.exports.forgot_password_post = async (req, res) => {
       const resetToken = user.createPasswordResetToken();
       await user.save();
       console.log(JSON.stringify(resetToken));
-      const resetURL = `${
-        process.env.NODE_ENV !== "production" ? "http" : "https"
-      }://${req.get("host")}/resetPassword/${resetToken}`;
+      const resetURL = `${process.env.NODE_ENV !== "production" ? "http" : "https"
+        }://${req.get("host")}/resetPassword/${resetToken}`;
       const from = `bocancea.1764205@studenti.uniroma1.it`;
       const to = user.email;
       const subject = "RUNATON ACCOUNT RESET PASSWORD";
