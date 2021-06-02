@@ -58,58 +58,63 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex";
-  export default {
-    name: "Signup",
-    data: () => {
-      return {
-        valid: true,
-        nameRules: [
-          (v) => !!v || "Username obbligatorio",
-          (v) =>
-            (v && v.length <= 10) ||
-            "Username deve contenere meno di 5 caratteri",
-        ],
-        emailRules: [
-          (v) => !!v || "E-mail obbligatoria",
-          (v) => /.+@.+\..+/.test(v) || "E-mail deve essere valida",
-        ],
-        pwRules: [
-          (v) => !!v || "Password obbligatoria",
-          (v) =>
-            (v && v.length <= 15) ||
-            "Password deve contenere meno di 15 caratteri",
-          (v) => /(?=.*[A-Z])/.test(v) || "Password deve avere una maiuscola",
-          (v) => /(?=.*\d)/.test(v) || "Password deve avere un numero",
-          (v) =>
-            /([!@$%])/.test(v) ||
-            "Password deve avere un carattere speciale [!@#$%]",
-        ],
-        select: null,
-        checkbox: false,
-        form: {
-          username: "",
-          email: "",
-          password: "",
-        },
-        error: "",
-      };
+import { mapActions, mapGetters } from "vuex";
+export default {
+  name: "Signup",
+  data: () => {
+    return {
+      valid: true,
+      nameRules: [
+        (v) => !!v || "Username obbligatorio",
+        (v) =>
+          (v && v.length <= 10) ||
+          "Username deve contenere meno di 5 caratteri",
+      ],
+      emailRules: [
+        (v) => !!v || "E-mail obbligatoria",
+        (v) => /.+@.+\..+/.test(v) || "E-mail deve essere valida",
+      ],
+      pwRules: [
+        (v) => !!v || "Password obbligatoria",
+        (v) =>
+          (v && v.length <= 15) ||
+          "Password deve contenere meno di 15 caratteri",
+        (v) => /(?=.*[A-Z])/.test(v) || "Password deve avere una maiuscola",
+        (v) => /(?=.*\d)/.test(v) || "Password deve avere un numero",
+        (v) =>
+          /([!@$%])/.test(v) ||
+          "Password deve avere un carattere speciale [!@#$%]",
+      ],
+      select: null,
+      checkbox: false,
+      form: {
+        username: "",
+        email: "",
+        password: "",
+      },
+      error: "",
+    };
+  },
+  computed: {
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+    }),
+  },
+  methods: {
+    ...mapActions({
+      signUp: "auth/signUp",
+    }),
+    submit() {
+      this.logIn(this.form).then(() => {
+        if (this.authenticated) this.$router.replace({ name: "Run" });
+      });
     },
-    methods: {
-      ...mapActions({
-        signUp: "auth/signUp",
-      }),
-      submit() {
-        this.signUp(this.form).then(() => {
-          this.$router.replace({ name: "Run" });
-        });
-      },
-      validate() {
-        this.$refs.form.validate();
-      },
-      reset() {
-        this.$refs.form.reset();
-      },
+    validate() {
+      this.$refs.form.validate();
     },
-  };
+    reset() {
+      this.$refs.form.reset();
+    },
+  },
+};
 </script>

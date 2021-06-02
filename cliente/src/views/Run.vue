@@ -43,37 +43,37 @@
   </v-app>
 </template>
 <script>
-  import store from "../store";
-  import Stopwatch from "@/components/Stopwatch";
-  import Countdown from "@/components/Countdown";
-  import Tracking from "@/components/Tracking";
-  import { mapGetters, mapActions } from "vuex";
-  import Vue from "vue";
-  Vue.use(Tracking);
-  export default {
-    store,
-    components: {
-      Stopwatch,
-      Countdown,
-      Tracking,
-    },
-    data: () => ({
-      //
+import store from "../store";
+import Stopwatch from "@/components/Stopwatch";
+import Countdown from "@/components/Countdown";
+import Tracking from "@/components/Tracking";
+import { mapGetters, mapActions } from "vuex";
+import Vue from "vue";
+Vue.use(Tracking);
+export default {
+  store,
+  components: {
+    Stopwatch,
+    Countdown,
+    Tracking,
+  },
+  data: () => ({
+    //
+  }),
+  name: "Run",
+  computed: {
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+      user: "auth/user",
+      startedStopwatch: "start/startedStopwatch",
+      startedCountdown: "start/startedCountdown",
     }),
-    name: "Run",
-    computed: {
-      ...mapGetters({
-        authenticated: "auth/authenticated",
-        user: "auth/user",
-        startedStopwatch: "start/startedStopwatch",
-        startedCountdown: "start/startedCountdown",
-      }),
-    },
-    methods: {
-      ...mapActions({
-        startStopwatchHandling: "start/startStopwatchHandling", // map `this.add()` to `this.$store.commit('increment')`
-        startCountdownHandling: "start/startCountdownHandling",
-      }),
-    },
-  };
+  },
+  methods: {
+    ...mapActions({
+      startStopwatchHandling: "start/startStopwatchHandling", // map `this.add()` to `this.$store.commit('increment')`
+      startCountdownHandling: "start/startCountdownHandling",
+    }),
+  },
+};
 </script>

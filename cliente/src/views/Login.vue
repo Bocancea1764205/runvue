@@ -21,9 +21,7 @@
         ><v-icon dark left> mdi-account-arrow-left-outline </v-icon>Login</v-btn
       >
       <v-btn color="error" class="mr-4" @click="reset"
-        ><v-icon dark left>
-          mdi-close-box-outline </v-icon
-        >Reset Login</v-btn
+        ><v-icon dark left> mdi-close-box-outline </v-icon>Reset Login</v-btn
       >
       <br />
       <br />
@@ -36,31 +34,32 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex";
-  export default {
-    name: "Login",
-    data: () => {
-      return {
-        valid: true,
-        form: {
-          username: "",
-          password: "",
-        },
-        error: "",
-      };
-    },
-    methods: {
-      ...mapActions({
-        logIn: "auth/logIn",
-      }),
-      submit() {
-        this.logIn(this.form).then(() => {
-          this.$router.replace({ name: "Run" });
-        });
+import { mapActions, mapGetters } from "vuex";
+export default {
+  name: "Login",
+  data: () => {
+    return {
+      form: {
+        username: "",
+        password: "",
       },
-      reset() {
-        this.$refs.form.reset();
-      },
+      error: "",
+    };
+  },
+  computed: {
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+    }),
+  },
+  methods: {
+    ...mapActions({
+      logIn: "auth/logIn",
+    }),
+    submit() {
+      this.logIn(this.form).then(() => {
+        if (this.authenticated) this.$router.replace({ name: "Run" });
+      });
     },
-  };
+  },
+};
 </script>

@@ -60,15 +60,15 @@ if (process.env.NODE_ENV === "production") {
   app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 }
 
-app.post("/api/run", async (req, res) => {
-  let token;
-  if (req.headers.authorization.startsWith("Bearer ")) {
-    token = req.headers.authorization.substring(
-      7,
-      req.headers.authorization.length
-    );
-  }
+app.post("/api/archive", async (req, res) => {
   try {
+    let token;
+    if (req.headers.authorization.startsWith("Bearer ")) {
+      token = req.headers.authorization.substring(
+        7,
+        req.headers.authorization.length
+      );
+    }
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
         if (err) {
@@ -83,9 +83,21 @@ app.post("/api/run", async (req, res) => {
             path: req.body.path,
           });
           await run.save();
-          console.log(run);
+          let archive = await Run.find({ user: user });
           console.log("giusto");
-          return res.status(200).json({});
+          if (user && archive) {
+            console.log(archive)
+            return res.status(200).json({
+              user: {
+                email: user.email,
+                username: user.username,
+              },
+              archive: archive
+            });
+          }
+          else {
+            res.status(400);
+          }
         }
       });
     } else {
@@ -93,53 +105,22 @@ app.post("/api/run", async (req, res) => {
       res.status(404);
     }
   } catch (error) {
-    console.log(req.headers.authorization);
     console.log("errore catch");
-    console.log(token);
     res.status(404);
   }
 });
 
-app.get("/api/archive", async (req, res) => {
-  let token;
-  if (req.headers.authorization.startsWith("Bearer ")) {
-    token = req.headers.authorization.substring(
-      7,
-      req.headers.authorization.length
-    );
-  }
-  try {
-    if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-        if (err) {
-          console.log(err.message);
-          res.status(400).json({});
-        } else {
-          let user = await User.findById(decodedToken.id);
-          let archive = await Run.find({ user: user });
-          return res.status(200).json({
-            archive,
-          });
-        }
-      });
-    } else {
-      res.status(404).json({});
-    }
-  } catch (error) {
-    res.status(404).json({});
-  }
-});
-
 app.delete("/api/archive", async (req, res) => {
-  let token;
-  if (req.headers.authorization.startsWith("Bearer ")) {
-    token = req.headers.authorization.substring(
-      7,
-      req.headers.authorization.length
-    );
-  }
-  const id = req.body.id;
   try {
+    let token;
+    if (req.headers.authorization.startsWith("Bearer ")) {
+      token = req.headers.authorization.substring(
+        7,
+        req.headers.authorization.length
+      );
+    }
+    console.log
+    const id = req.body.id;
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
         if (err) {
@@ -148,7 +129,9 @@ app.delete("/api/archive", async (req, res) => {
         } else {
           console.log(id);
           await Run.deleteOne({ _id: id });
-          return res.status(200).json({});
+          let user = await User.findById(decodedToken.id);
+          let archive = await Run.find({ user: user });
+          return res.status(200).json({ data: { archive: archive } });
         }
       });
     } else {
