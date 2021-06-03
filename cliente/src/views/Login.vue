@@ -84,7 +84,13 @@ export default {
     }),
     submit() {
       this.logIn(this.form).then(() => {
-        if (this.authenticated) this.$router.replace({ name: "Run" });
+        if (
+          this.authenticated &&
+          (this.$vuetify.breakpoint.name === "sm" ||
+            this.$vuetify.breakpoint.name === "xs")
+        )
+          this.$router.replace({ name: "Run" });
+        else if (this.authenticated) this.$router.replace({ name: "Archivio" });
       });
     },
     reset() {
