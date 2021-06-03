@@ -8,7 +8,7 @@
             :coord="coord"
           />
         </v-col>
-        <v-card> </v-card>
+
         <v-col class="text-center">
           <v-btn
             class="mr-4"
@@ -37,9 +37,27 @@
             >Resetta</v-btn
           >
         </v-col>
+        <v-col cols="12">
+          <v-card>
+            <v-card-title class="text-h5"> </v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-col>
+                  <p class="text-h6 text--primary">
+                    Lunghezza:
+                  </p>
+                </v-col>
+                <v-spacer></v-spacer>
+                <v-col>
+                  <p class="text-h6 text--secondary">
+                    {{ realtime_meters() }}
+                  </p>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-col>
       </v-row>
-
-      <div>{{ realtimemeters }}</div>
     </v-container>
   </v-app>
 </template>
@@ -170,7 +188,7 @@ export default {
       this.coord = this.auxArray;
       navigator.geolocation.clearWatch(geo.id);
       this.setPath(coordinates);
-      this.setMeters(this.meters);
+      this.setMeters(Math.floor(this.meters));
       this.setDate(Date.now());
       console.log(this.$store.state.start.run.path);
       console.log(this.$store.state.start.run.meters);

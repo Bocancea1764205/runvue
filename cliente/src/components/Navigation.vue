@@ -33,6 +33,13 @@
             <v-list-item-title>Archivio</v-list-item-title>
           </v-list-item>
 
+          <v-list-item v-if="authenticated" to="/account">
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Account</v-list-item-title>
+          </v-list-item>
+
           <v-list-item to="/about">
             <v-list-item-icon>
               <v-icon>mdi-information-outline</v-icon>
@@ -62,7 +69,8 @@
           </v-list-item>
           <v-list-item>
             <v-switch
-              v-model="$vuetify.theme.dark"
+              v-if="darkmode()"
+              v-model="dark"
               hint="Scorri a destra per abilitare la Dark Mode"
               inset
               label="Dark Mode"
@@ -82,22 +90,57 @@ export default {
     drawer: false,
     group: null,
   }),
+  beforeMount() {
+    if (this.$store.state.auth.darkmode) {
+      this.$vuetify.theme.dark = true;
+    } else {
+      this.$vuetify.theme.dark = false;
+    }
+  },
   computed: {
     ...mapGetters({
       authenticated: "auth/authenticated",
       user: "auth/user",
     }),
+    dark: {
+      get() {
+        return this.$store.state.auth.darkmode;
+      },
+      set(value) {
+        if (value) {
+          console.log(value);
+          this.$vuetify.theme.dark = true;
+        } else {
+          console.log(value);
+          this.$vuetify.theme.dark = false;
+        }
+        this.darkmodeAction(value);
+      },
+    },
   },
   methods: {
     ...mapActions({
       logOutAction: "auth/logOut",
-      changeDarkmode: "auth/changeDarkmode",
+      darkmodeAction: "auth/darkmodeAction",
     }),
     logOut() {
       this.logOutAction().then(() => {
         if (!(this.$route.name === "Home"))
           this.$router.replace({ name: "Home" });
       });
+    },
+    darkmode() {
+      if (this.authenticated) {
+        if (this.$store.state.auth.darkmode) {
+          this.$vuetify.theme.dark = true;
+        } else {
+          this.$vuetify.theme.dark = false;
+        }
+        return true;
+      } else {
+        this.$vuetify.theme.dark = false;
+        return false;
+      }
     },
   },
 };

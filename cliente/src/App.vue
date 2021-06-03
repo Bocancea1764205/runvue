@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Navigation />
-    <v-main>
+    <v-main no-gutters>
       <router-view></router-view>
     </v-main>
     <Footer />
@@ -9,16 +9,16 @@
 </template>
 
 <script>
-  import store from "./store";
-  import Navigation from "@/components/Navigation";
-  import Footer from "@/components/Footer";
-  export default {
-    store,
-    name: "App",
-    components: {
-      Navigation,
-      Footer,
-    },
-    data: () => ({}),
-  };
+import store from "./store";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+export default {
+  store,
+  name: "App",
+  components: {
+    Navigation,
+    Footer,
+  },
+  data: () => ({}),
+};
 </script>

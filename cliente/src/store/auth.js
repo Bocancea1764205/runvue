@@ -6,6 +6,7 @@ export default {
     token: null,
     user: null,
     archive: null,
+    darkmode: false,
   },
   getters: {
     authenticated(state) {
@@ -16,6 +17,9 @@ export default {
     },
     archive(state) {
       return state.archive;
+    },
+    darkmode(state) {
+      return state.darkmode;
     }
   },
   mutations: {
@@ -28,6 +32,9 @@ export default {
     SET_ARCHIVE(state, data) {
       state.archive = data
     },
+    SET_DARKMODE(state, data) {
+      state.darkmode = data
+    }
   },
   actions: {
     async signUp({ dispatch }, credentials) {
@@ -56,19 +63,22 @@ export default {
       try {
         let response = await axios.get("api");
         commit("SET_USER", response.data.user);
-        commit("SET_ARCHIVE", response.data.archive),
-          console.log("riuscito!!!");
+        commit("SET_ARCHIVE", response.data.archive);
+        commit("SET_DARKMODE", response.data.darkmode);
+        console.log("riuscito!!!");
       } catch (e) {
         console.log("fail");
         commit("SET_TOKEN", null);
         commit("SET_USER", null);
         commit("SET_ARCHIVE", null);
+        commit("SET_DARKMODE", false)
       }
     },
     logOut({ commit }) {
       commit("SET_TOKEN", null);
       commit("SET_USER", null);
       commit("SET_ARCHIVE", null);
+      commit("SET_DARKMODE", false)
     },
     async forgotPassword(_, credentials) {
       axios.post("api/forgotPassword", credentials);
@@ -102,7 +112,21 @@ export default {
         commit("SET_TOKEN", null);
         commit("SET_USER", null);
         commit("SET_ARCHIVE", null);
+        commit("SET_DARKMODE", false)
+      }
+    },
+    async darkmodeAction({ commit }, value) {
+      commit("SET_DARKMODE", value);
+      try {
+        await axios.patch("api/darkmode", { darkmode: value });
+      } catch (e) {
+        alert(`Sei offline, l'impostazione non risulta correttamente inviata al server`)
+        commit("SET_TOKEN", null);
+        commit("SET_USER", null);
+        commit("SET_ARCHIVE", null);
+        commit("SET_DARKMODE", false)
       }
     }
+
   },
 };

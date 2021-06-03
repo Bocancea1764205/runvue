@@ -92,7 +92,8 @@ app.post("/api/archive", async (req, res) => {
                 email: user.email,
                 username: user.username,
               },
-              archive: archive
+              archive: archive,
+              darkmode: user.darkmode
             });
           }
           else {
@@ -141,7 +142,36 @@ app.delete("/api/archive", async (req, res) => {
     res.status(404).json({});
   }
 });
-
+app.patch("/api/darkmode", async (req, res) => {
+  try {
+    let token;
+    if (req.headers.authorization.startsWith("Bearer ")) {
+      token = req.headers.authorization.substring(
+        7,
+        req.headers.authorization.length
+      );
+    }
+    console.log
+    const darkmode = req.body.darkmode;
+    if (token) {
+      jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+        if (err) {
+          console.log(err.message);
+          res.status(400).json({});
+        } else {
+          let user = await User.findById(decodedToken.id);
+          user.darkmode = darkmode
+          await user.save();
+          return res.status(200).json({});
+        }
+      });
+    } else {
+      res.status(400).json({});
+    }
+  } catch (error) {
+    res.status(404).json({});
+  }
+});
 app.listen(process.env.PORT, () => {
   console.log("Server is running on %s port", process.env.PORT || 3000);
 });

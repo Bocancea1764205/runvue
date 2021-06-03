@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
     passwordResetToken: String,
     passwordResetExpires: Date,
     passwordHashed: { type: Boolean, default: false },
+    darkmode: { type: Boolean, default: false },
   },
   {
     collection: "users",

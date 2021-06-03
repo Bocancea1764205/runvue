@@ -32,7 +32,7 @@ const checkUser = (req, res, next) => {
                 username: user.username,
               },
               archive: archive,
-              darkMode: user.darkMode
+              darkmode: user.darkmode
             });
           }
           else {

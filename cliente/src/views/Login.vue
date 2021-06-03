@@ -54,49 +54,48 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters } from "vuex";
-  export default {
-    name: "Login",
-    data: () => {
-      return {
-        valid: false,
-        nameRules: [(v) => !!v || "Username obbligatorio"],
-        pwRules: [(v) => !!v || "Password obbligatoria"],
-        select: null,
-        form: {
-          username: "",
-          password: "",
-        },
-        error: "",
-      };
-    },
-    mounted() {
-      this.valid = false;
-    },
-    computed: {
-      ...mapGetters({
-        authenticated: "auth/authenticated",
-      }),
-    },
-    methods: {
-      ...mapActions({
-        logIn: "auth/logIn",
-      }),
-      submit() {
-        this.logIn(this.form).then(() => {
-          if (
-            this.authenticated &&
-            (this.$vuetify.breakpoint.name === "sm" ||
-              this.$vuetify.breakpoint.name === "xs")
-          )
-            this.$router.replace({ name: "Run" });
-          else if (this.authenticated)
-            this.$router.replace({ name: "Archivio" });
-        });
+import { mapActions, mapGetters } from "vuex";
+export default {
+  name: "Login",
+  data: () => {
+    return {
+      valid: false,
+      nameRules: [(v) => !!v || "Username obbligatorio"],
+      pwRules: [(v) => !!v || "Password obbligatoria"],
+      select: null,
+      form: {
+        username: "",
+        password: "",
       },
-      reset() {
-        this.$refs.form.reset();
-      },
+      error: "",
+    };
+  },
+  mounted() {
+    this.valid = false;
+  },
+  computed: {
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+    }),
+  },
+  methods: {
+    ...mapActions({
+      logIn: "auth/logIn",
+    }),
+    submit() {
+      this.logIn(this.form).then(() => {
+        if (
+          this.authenticated &&
+          (this.$vuetify.breakpoint.name === "sm" ||
+            this.$vuetify.breakpoint.name === "xs")
+        )
+          this.$router.replace({ name: "Run" });
+        else if (this.authenticated) this.$router.replace({ name: "Archivio" });
+      });
     },
-  };
+    reset() {
+      this.$refs.form.reset();
+    },
+  },
+};
 </script>
