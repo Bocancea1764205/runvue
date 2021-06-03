@@ -50,7 +50,7 @@
                 <v-spacer></v-spacer>
                 <v-col>
                   <p class="text-h6 text--secondary">
-                    {{ realtime_meters() }}
+                    {{ realtimemeters }}
                   </p>
                 </v-col>
               </v-row>
