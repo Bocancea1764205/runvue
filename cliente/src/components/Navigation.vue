@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-app-bar color="deep-orange" dark>
+    <v-app-bar color="deep-orange" dark app flat>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Runaton</v-toolbar-title>
@@ -19,7 +19,7 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/run">
+          <v-list-item to="/run" class="hidden-sm-and-up">
             <v-list-item-icon>
               <v-icon>mdi-run-fast</v-icon>
             </v-list-item-icon>
@@ -83,28 +83,28 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from "vuex";
-  export default {
-    data: () => ({
-      drawer: false,
-      group: null,
+import { mapGetters, mapActions } from "vuex";
+export default {
+  data: () => ({
+    drawer: false,
+    group: null,
+  }),
+  computed: {
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+      user: "auth/user",
     }),
-    computed: {
-      ...mapGetters({
-        authenticated: "auth/authenticated",
-        user: "auth/user",
-      }),
+  },
+  methods: {
+    ...mapActions({
+      logOutAction: "auth/logOut",
+    }),
+    logOut() {
+      this.logOutAction().then(() => {
+        if (!(this.$route.name === "Home"))
+          this.$router.replace({ name: "Home" });
+      });
     },
-    methods: {
-      ...mapActions({
-        logOutAction: "auth/logOut",
-      }),
-      logOut() {
-        this.logOutAction().then(() => {
-          if (!(this.$route.name === "Home"))
-            this.$router.replace({ name: "Home" });
-        });
-      },
-    },
-  };
+  },
+};
 </script>

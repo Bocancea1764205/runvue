@@ -1,32 +1,41 @@
 <template>
   <v-app>
-    <v-card
-      v-show="!startedStopwatch && !startedCountdown"
-      elevation="2"
-      id="map"
-      style="width: 100% !important; height: 500px !important;"
-    >
-    </v-card>
-    <v-btn
-      v-if="authenticated && !startedStopwatch && !startedCountdown"
-      v-on:click="
-        saveRun($store.state.start.run);
-        meters = 0;
-      "
-      color="success"
-      >Salva corsa</v-btn
-    >
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <DrawMap
+            v-show="!startedStopwatch && !startedCountdown"
+            :coord="coord"
+          />
+        </v-col>
+        <v-card> </v-card>
+        <v-col cols="6">
+          <v-btn
+            v-show="!startedStopwatch && !startedCountdown"
+            v-on:click="
+              saveRun($store.state.start.run);
+              meters = 0;
+            "
+            color="success"
+            >Salva corsa</v-btn
+          >
+        </v-col>
+        <v-col cols="6">
+          <v-btn
+            v-show="!startedStopwatch && !startedCountdown"
+            v-on:click="
+              reset();
+              meters = 0;
+              soglia = 0;
+            "
+            color="info"
+            >Resetta</v-btn
+          >
+        </v-col>
+      </v-row>
 
-    <v-btn
-      v-show="!startedStopwatch && !startedCountdown && meters > 0"
-      v-on:click="
-        reset();
-        meters = 0;
-      "
-      color="info"
-      >Resetta</v-btn
-    >
-    <div>{{ realtimemeters }}</div>
+      <div>{{ realtimemeters }}</div>
+    </v-container>
   </v-app>
 </template>
 
@@ -37,28 +46,31 @@ const geo = {
   id: undefined,
 };
 import { mapGetters, mapActions } from "vuex";
-import mapboxgl from "mapbox-gl";
+import DrawMap from "@/components/DrawMap";
 import Vue from "vue";
+import mapboxgl from "mapbox-gl";
 Vue.use(geo);
 Vue.use(mapboxgl);
 export default {
   name: "Tracking",
+  components: {
+    DrawMap,
+  },
   data: () => ({
     soglia: "",
     meters: "",
-    map: "",
     realtimemeters: "",
+    auxArray: [],
+    coord: [],
   }),
   created() {
     this.soglia = 0;
     this.meters = 0;
-    this.map = "";
     this.realtimemeters = "";
   },
   mounted() {
     this.soglia = 0;
     this.meters = 0;
-    this.map = "";
     this.realtimemeters = "";
   },
   watch: {
@@ -99,12 +111,13 @@ export default {
         await navigator.wakeLock.request("screen");
       } catch (err) {
         console.log(`${err.name}, ${err.message}`);
-        alert(
+        /*alert(
           "Questo browser non supporta questa funzionalità. Attualmente Chrome, Edge e Opera sono i browser supportati"
         );
-        return;
+        return;*/
       }
       coordinates = [];
+      this.coord = [];
       geo.id = navigator.geolocation.watchPosition(
         this.successPosition,
         this.failurePosition,
@@ -122,6 +135,10 @@ export default {
           (process.env.NODE_ENV === "production" ? 20 : Infinity)
       ) {
         coordinates.push([position.coords.longitude, position.coords.latitude]);
+        this.auxArray.push([
+          position.coords.longitude,
+          position.coords.latitude,
+        ]);
         lastTwoCoordinates.push([
           position.coords.longitude,
           position.coords.latitude,
@@ -145,6 +162,7 @@ export default {
       return;
     },
     stopTracking() {
+      this.coord = this.auxArray;
       navigator.geolocation.clearWatch(geo.id);
       this.setPath(coordinates);
       this.setMeters(this.meters);
@@ -153,52 +171,8 @@ export default {
       console.log(this.$store.state.start.run.meters);
       console.log(this.$store.state.start.run.date);
       console.log(this.$store.state.start.run);
+    },
 
-      this.drawMap();
-    },
-    //********************Mapbox Draw Map******************/
-    drawMap() {
-      const length = coordinates.length;
-      this.soglia = 0;
-      if (length > 1) {
-        mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_API;
-        this.map = new mapboxgl.Map({
-          container: "map",
-          style: "mapbox://styles/mapbox/streets-v11",
-          center: coordinates[Math.floor(coordinates.length / 2)],
-          zoom: 15,
-        });
-        this.map.on("dataloading", () => {
-          window.dispatchEvent(new Event("resize"));
-        });
-        this.map.on("load", () => {
-          this.map.addSource("route", {
-            type: "geojson",
-            data: {
-              type: "Feature",
-              properties: {},
-              geometry: {
-                type: "LineString",
-                coordinates: coordinates,
-              },
-            },
-          });
-          this.map.addLayer({
-            id: "route",
-            type: "line",
-            source: "route",
-            layout: {
-              "line-join": "round",
-              "line-cap": "round",
-            },
-            paint: {
-              "line-color": "#f26958",
-              "line-width": 8,
-            },
-          });
-        });
-      }
-    },
     //**********************Realtime Meters*******************/
     realtimeMeters: function(lastTwoCoordinates) {
       if (
@@ -232,20 +206,3 @@ export default {
   },
 };
 </script>
-
-<style lang="css">
-#app {
-  text-align: center;
-}
-@import "https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css";
-*:focus {
-  outline: none;
-}
-.mapboxgl-ctrl-attrib-button {
-  display: none !important;
-}
-.mapboxgl-ctrl-bottom-left,
-.mapboxgl-ctrl-bottom-right {
-  display: none !important;
-}
-</style>

@@ -1,4 +1,4 @@
-<template v-if="authenticated">
+<template>
   <v-app>
     <h1 class="text-center">Il mio archivio</h1>
     <v-divider></v-divider>
