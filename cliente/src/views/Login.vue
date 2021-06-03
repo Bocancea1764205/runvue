@@ -54,42 +54,42 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters } from "vuex";
-  export default {
-    name: "Login",
-    data: () => {
-      return {
-        valid: false,
-        nameRules: (v) => !!v || "Username obbligatorio",
-        pwRules: (v) => !!v || "Password obbligatoria",
-        select: null,
-        form: {
-          username: "",
-          password: "",
-        },
-        error: "",
-      };
-    },
-    mounted() {
-      this.valid = false;
-    },
-    computed: {
-      ...mapGetters({
-        authenticated: "auth/authenticated",
-      }),
-    },
-    methods: {
-      ...mapActions({
-        logIn: "auth/logIn",
-      }),
-      submit() {
-        this.logIn(this.form).then(() => {
-          if (this.authenticated) this.$router.replace({ name: "Run" });
-        });
+import { mapActions, mapGetters } from "vuex";
+export default {
+  name: "Login",
+  data: () => {
+    return {
+      valid: false,
+      nameRules: (v) => !!v || "Username obbligatorio",
+      pwRules: (v) => !!v || "Password obbligatoria",
+      select: null,
+      form: {
+        username: "",
+        password: "",
       },
-      reset() {
-        this.$refs.form.reset();
-      },
+      error: "",
+    };
+  },
+  mounted() {
+    this.valid = false;
+  },
+  computed: {
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+    }),
+  },
+  methods: {
+    ...mapActions({
+      logIn: "auth/logIn",
+    }),
+    submit() {
+      this.logIn(this.form).then(() => {
+        if (this.authenticated) this.$router.replace({ name: "Run" });
+      });
     },
-  };
+    reset() {
+      this.$refs.form.reset();
+    },
+  },
+};
 </script>
