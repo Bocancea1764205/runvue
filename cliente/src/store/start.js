@@ -69,23 +69,6 @@ export default {
       } catch (err) {
         alert(err.response.data.error)
       }
-      /*let result = await fetch("api/archive", {
-        method: "POST",
-        credentials: 'include',
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          meters: Math.floor(data.meters),
-          path: Object.values(data.path),
-          time: data.time,
-          date: data.date,
-        })
-      }).then((res) => { console.log(res); res.json() })
-      console.log(result)
-      console.log(result)
-      store.commit("auth/SET_ARCHIVE", result.archive)*/
       commit("RESET_STATUS_ALL", null);
     },
     async reset({ commit }) {

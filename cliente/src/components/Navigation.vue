@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-app-bar color="deep-orange" dark app flat>
+    <v-app-bar color="deep-orange" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Runaton</v-toolbar-title>
@@ -33,13 +33,6 @@
             <v-list-item-title>Archivio</v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-if="authenticated" to="/account">
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
-          </v-list-item>
-
           <v-list-item to="/about">
             <v-list-item-icon>
               <v-icon>mdi-information-outline</v-icon>
@@ -67,7 +60,7 @@
             </v-list-item-icon>
             <v-list-item-title>Logout</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="authenticated">
+          <v-list-item>
             <v-switch
               v-model="$vuetify.theme.dark"
               hint="Scorri a destra per abilitare la Dark Mode"
@@ -98,6 +91,7 @@ export default {
   methods: {
     ...mapActions({
       logOutAction: "auth/logOut",
+      changeDarkmode: "auth/changeDarkmode",
     }),
     logOut() {
       this.logOutAction().then(() => {

@@ -31,7 +31,8 @@ const checkUser = (req, res, next) => {
                 email: user.email,
                 username: user.username,
               },
-              archive: archive
+              archive: archive,
+              darkMode: user.darkMode
             });
           }
           else {

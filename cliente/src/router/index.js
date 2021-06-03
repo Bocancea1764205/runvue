@@ -5,7 +5,6 @@ import Run from "../views/Run.vue";
 import Signup from "../views/Signup.vue";
 import Login from "../views/Login.vue";
 import Archivio from "../views/Archivio.vue";
-import Account from "../views/Account.vue";
 import Forgot from "../views/Forgot.vue";
 import Reset from "../views/Reset.vue";
 
@@ -45,11 +44,6 @@ const routes = [
     path: "/archivio",
     name: "Archivio",
     component: Archivio,
-  },
-  {
-    path: "/account",
-    name: "Account",
-    component: Account,
   },
   {
     path: "/forgotPassword",
