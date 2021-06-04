@@ -1,8 +1,10 @@
 <template>
-  <span id="countdown" v-html="countdown"></span>
+  <span class="text-center">
+    <h2>
+      {{ countdown }}
+    </h2>
+  </span>
 </template>
-
-<style></style>
 
 <script>
 import { mapActions } from "vuex";

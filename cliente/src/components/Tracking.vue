@@ -1,65 +1,66 @@
 <template>
-  <v-app>
-    <v-container>
-      <v-row>
-        <v-col cols="12">
-          <DrawMap
-            v-show="!startedStopwatch && !startedCountdown && meters > 0"
-            :coord="coord"
-          />
-        </v-col>
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <DrawMap
+          v-show="!startedStopwatch && !startedCountdown && meters > 0"
+          :coord="coord"
+        />
+      </v-col>
 
-        <v-col class="text-center">
-          <v-btn
-            class="mr-4"
-            v-show="
-              authenticated &&
-                !startedStopwatch &&
-                !startedCountdown &&
-                meters > 0
-            "
-            v-on:click="
-              saveRun($store.state.start.run);
-              meters = 0;
-            "
-            color="success"
-            >Salva corsa</v-btn
-          >
-          <v-btn
-            class="mr-4"
-            v-show="!startedStopwatch && !startedCountdown && meters > 0"
-            v-on:click="
-              reset();
-              meters = 0;
-              soglia = 0;
-            "
-            color="info"
-            >Resetta</v-btn
-          >
-        </v-col>
-        <v-col cols="12">
-          <v-card>
-            <v-card-title class="text-h5"> </v-card-title>
-            <v-card-text>
-              <v-row>
-                <v-col>
-                  <p class="text-h6 text--primary">
-                    Lunghezza:
-                  </p>
-                </v-col>
-                <v-spacer></v-spacer>
-                <v-col>
-                  <p class="text-h6 text--secondary">
-                    {{ realtimemeters }}
-                  </p>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-app>
+      <v-col class="text-center">
+        <v-btn
+          class="mr-4"
+          v-show="
+            authenticated &&
+              !startedStopwatch &&
+              !startedCountdown &&
+              meters > 0
+          "
+          v-on:click="
+            saveRun($store.state.start.run);
+            meters = 0;
+          "
+          color="success"
+          >Salva corsa</v-btn
+        >
+        <v-btn
+          class="mr-4"
+          v-show="!startedStopwatch && !startedCountdown && meters > 0"
+          v-on:click="
+            reset();
+            meters = 0;
+            soglia = 0;
+          "
+          color="info"
+          >Resetta</v-btn
+        >
+      </v-col>
+      <v-col
+        cols="12"
+        v-show="!startedStopwatch && !startedCountdown && meters > 0"
+      >
+        <v-card>
+          <v-card-title class="text-h5"> </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col>
+                <p class="text-h6 text--primary">
+                  Lunghezza:
+                </p>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col>
+                <p class="text-h6 text--secondary">
+                  {{ realtimemeters }}
+                </p>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

@@ -1,13 +1,13 @@
 <template>
-  <v-app>
-    <v-container>
-      <v-card elevation="11">
-        <v-container>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-card elevation="11">
           <h1 class="text-center" color="deep-orange">About</h1>
           <v-divider></v-divider>
           <br />
-          <v-row dense>
-            <v-card class="mx-auto" max-width="380">
+          <v-row>
+            <v-card class="mx-auto" max-width="350" min-width="350">
               <v-img
                 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
                 height="200px"
@@ -92,17 +92,17 @@
             </v-card>
           </v-row>
           <br />
-        </v-container>
-      </v-card>
-    </v-container>
-  </v-app>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
-  export default {
-    name: "About",
-    data: () => ({
-      show: false,
-      show2: false,
-    }),
-  };
+export default {
+  name: "About",
+  data: () => ({
+    show: false,
+    show2: false,
+  }),
+};
 </script>

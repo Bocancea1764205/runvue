@@ -1,8 +1,10 @@
 <template>
   <v-app>
     <Navigation />
-    <v-main no-gutters>
-      <router-view></router-view>
+    <v-main>
+      <v-container>
+        <router-view></router-view>
+      </v-container>
     </v-main>
     <Footer />
   </v-app>

@@ -1,57 +1,55 @@
 <template>
-  <v-app>
-    <v-container no-gutters>
-      <h1 class="text-center">Run</h1>
-      <v-divider></v-divider>
-      <br />
-      <div class="text-center">
-        <h1>
-          <strong><Stopwatch /></strong>
-        </h1>
-      </div>
-      <br />
-      <v-row class="text-center">
-        <v-col cols="12">
-          <v-btn
-            height="100px"
-            width="100px"
-            v-show="!startedCountdown"
-            color="success"
-            elevation="11"
-            x-large
-            @click="startCountdownHandling()"
-            ><v-icon dark size="60px">mdi-play</v-icon></v-btn
-          >
-        </v-col>
-        <v-col col="12">
-          <v-btn
-            height="100px"
-            width="100px"
-            v-show="startedCountdown"
-            color="error"
-            elevation="11"
-            x-large
-            @click="
-              if (startedCountdown) {
-                startCountdownHandling();
-                if (startedStopwatch) startStopwatchHandling();
-              }
-            "
-            ><v-icon dark size="60px">mdi-stop</v-icon></v-btn
-          >
-        </v-col>
-      </v-row>
-      <br />
-      <div class="text-center">
-        <h2>
-          <Countdown />
-        </h2>
-      </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <h1 class="text-center">Run</h1>
+        <v-divider></v-divider>
+        <br />
+        <div class="text-center">
+          <h1>
+            <strong><Stopwatch /></strong>
+          </h1>
+        </div>
+        <br />
+        <v-row class="text-center">
+          <v-col cols="12">
+            <v-btn
+              height="100px"
+              width="100px"
+              v-show="!startedCountdown"
+              color="success"
+              elevation="11"
+              x-large
+              @click="startCountdownHandling()"
+              ><v-icon dark size="60px">mdi-play</v-icon></v-btn
+            >
 
-      <br />
-      <Tracking />
-    </v-container>
-  </v-app>
+            <v-btn
+              height="100px"
+              width="100px"
+              v-show="startedCountdown"
+              color="error"
+              elevation="11"
+              x-large
+              @click="
+                if (startedCountdown) {
+                  startCountdownHandling();
+                  if (startedStopwatch) startStopwatchHandling();
+                }
+              "
+              ><v-icon dark size="60px">mdi-stop</v-icon></v-btn
+            >
+          </v-col>
+        </v-row>
+        <br />
+
+        <Countdown />
+
+        <br />
+        <Tracking />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 import store from "../store";
