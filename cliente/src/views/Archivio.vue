@@ -6,6 +6,7 @@
         <v-divider></v-divider>
         <br />
         <v-card
+          class="text-center"
           v-for="(item, index) in archive"
           :index="index"
           :key="item._id"
@@ -42,32 +43,32 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-export default {
-  name: "Archivio",
-  data: () => {
-    return {};
-  },
+  import { mapActions, mapGetters } from "vuex";
+  export default {
+    name: "Archivio",
+    data: () => {
+      return {};
+    },
 
-  watch: {
-    archive: function() {
-      return this.$store.state.auth.archive
-        ? Object.values(this.$store.state.auth.archive)
-        : "";
+    watch: {
+      archive: function() {
+        return this.$store.state.auth.archive
+          ? Object.values(this.$store.state.auth.archive)
+          : "";
+      },
     },
-  },
-  computed: {
-    ...mapGetters({
-      archive: "auth/archive",
-    }),
-  },
-  methods: {
-    ...mapActions({
-      deleteRun: "auth/deleteRun",
-    }),
-    deleteRunAction(id) {
-      this.deleteRun(id);
+    computed: {
+      ...mapGetters({
+        archive: "auth/archive",
+      }),
     },
-  },
-};
+    methods: {
+      ...mapActions({
+        deleteRun: "auth/deleteRun",
+      }),
+      deleteRunAction(id) {
+        this.deleteRun(id);
+      },
+    },
+  };
 </script>

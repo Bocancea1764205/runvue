@@ -7,7 +7,7 @@
           <v-divider></v-divider>
           <br />
           <v-row>
-            <v-card class="mx-auto" max-width="350" min-width="350">
+            <v-card class="mx-auto" max-width="350">
               <v-img
                 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
                 height="200px"
@@ -48,8 +48,7 @@
                 way to escape.
               </v-card-text>
             </v-card>
-
-            <v-card class="mx-auto" max-width="380">
+            <v-card class="mx-auto" max-width="350">
               <v-img
                 src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
                 height="200px"
@@ -98,11 +97,11 @@
   </v-container>
 </template>
 <script>
-export default {
-  name: "About",
-  data: () => ({
-    show: false,
-    show2: false,
-  }),
-};
+  export default {
+    name: "About",
+    data: () => ({
+      show: false,
+      show2: false,
+    }),
+  };
 </script>
