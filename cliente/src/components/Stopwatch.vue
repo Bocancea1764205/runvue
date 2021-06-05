@@ -31,9 +31,8 @@ export default {
     },
     tempo: function() {
       if (
-        !this.startedStopwatch &&
-        !this.startedStopwatch &&
-        this.$store.state.start.run.path === null
+        !this.startedCountdown &&
+        this.$store.state.start.run.meters === null
       ) {
         this.reset();
         return `${this.ore}:${this.minuti}:${this.secondi}.${this.decimi}`;

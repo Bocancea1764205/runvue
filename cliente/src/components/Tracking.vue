@@ -6,9 +6,7 @@
           block
           height="30vh"
           width="100%"
-          v-show="
-            !startedCountdown && !!$store.state.start.run.meters === false
-          "
+          v-show="!startedCountdown && meters === 0"
           color="success"
           x-large
           @click="
@@ -26,8 +24,8 @@
           x-large
           @click="
             if (startedCountdown) {
-              startCountdownHandling();
               if (startedStopwatch) startStopwatchHandling();
+              startCountdownHandling();
             }
           "
           ><v-icon size="150">mdi-stop</v-icon></v-btn
@@ -73,7 +71,11 @@
               block
               width="100%"
               height="10vh"
-              v-show="!startedStopwatch && !startedCountdown && meters > 0"
+              v-show="
+                !startedStopwatch &&
+                  !startedCountdown &&
+                  !!$store.state.start.run.path === true
+              "
               v-on:click="
                 reset();
                 meters = 0;
