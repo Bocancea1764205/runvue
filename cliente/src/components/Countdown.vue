@@ -41,8 +41,8 @@ export default {
       var lapsed = this.millisecondi;
       var s = Math.floor(lapsed / 1000);
       return this.startedCountdown && this.millisecondi <= 1000
-        ? `VIA!`
-        : `Parti tra: ${s}`;
+        ? ``
+        : `Lo stopwatch partirà tra: ${s}`;
     },
     millisecondi: function() {
       return this.countdownTime - this.currentTime;

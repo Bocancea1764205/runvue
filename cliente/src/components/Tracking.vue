@@ -1,6 +1,38 @@
 <template>
-  <v-container>
+  <v-container pa-0>
     <v-row>
+      <v-col cols="12">
+        <v-btn
+          block
+          height="30vh"
+          width="100%"
+          v-show="!startedCountdown && $store.state.start.run.meters === null"
+          color="success"
+          elevation="11"
+          x-large
+          @click="
+            reset();
+            startCountdownHandling();
+          "
+          ><v-icon size="150">mdi-play</v-icon></v-btn
+        >
+        <v-btn
+          block
+          height="30vh"
+          width="100%"
+          v-show="startedCountdown"
+          color="error"
+          elevation="11"
+          x-large
+          @click="
+            if (startedCountdown) {
+              startCountdownHandling();
+              if (startedStopwatch) startStopwatchHandling();
+            }
+          "
+          ><v-icon size="150">mdi-stop</v-icon></v-btn
+        >
+      </v-col>
       <v-col cols="12">
         <DrawMap
           v-show="!startedStopwatch && !startedCountdown && meters > 0"
@@ -10,7 +42,9 @@
 
       <v-col class="text-center">
         <v-btn
-          class="mr-4"
+          block
+          width="100%"
+          height="10vh"
           v-show="
             authenticated &&
               !startedStopwatch &&
@@ -26,10 +60,12 @@
             coord = [];
           "
           color="success"
-          >Salva corsa</v-btn
+          ><h2>Salva corsa</h2></v-btn
         >
         <v-btn
-          class="mr-4"
+          block
+          width="100%"
+          height="10vh"
           v-show="!startedStopwatch && !startedCountdown && meters > 0"
           v-on:click="
             reset();
@@ -39,10 +75,10 @@
             coord = [];
           "
           color="info"
-          >Resetta</v-btn
+          ><h2>Resetta</h2></v-btn
         >
       </v-col>
-      <v-col cols="12" v-show="meters > 0">
+      <v-col cols="12" v-show="meters >= 0">
         <v-card class="text-center" elevation="11">
           <v-card-title class="text-h5"> </v-card-title>
           <v-card-text>
@@ -113,13 +149,9 @@ export default {
     ...mapGetters({
       authenticated: "auth/authenticated",
       user: "auth/user",
+      startedStopwatch: "start/startedStopwatch",
+      startedCountdown: "start/startedCountdown",
     }),
-    startedStopwatch: function() {
-      return this.$store.state.start.startedStopwatch;
-    },
-    startedCountdown: function() {
-      return this.$store.state.start.startedStopwatch;
-    },
   },
   methods: {
     ...mapActions({
@@ -128,6 +160,8 @@ export default {
       setMeters: "start/setMeters",
       setDate: "start/setDate",
       saveRun: "start/saveRun",
+      startStopwatchHandling: "start/startStopwatchHandling",
+      startCountdownHandling: "start/startCountdownHandling",
     }),
     trackPosition: async function() {
       if (!navigator.geolocation) {
@@ -138,10 +172,10 @@ export default {
         await navigator.wakeLock.request("screen");
       } catch (err) {
         console.log(`${err.name}, ${err.message}`);
-        /*alert(
-          "Questo browser non supporta questa funzionalità. Attualmente Chrome, Edge e Opera sono i browser supportati"
+        alert(
+          "Questo browser non supporta questa funzionalità. Attualmente solo Chrome, Edge e Opera su Android sono i browser supportati"
         );
-        return;*/
+        return;
       }
       coordinates = [];
       this.coord = [];
