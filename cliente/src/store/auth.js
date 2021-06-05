@@ -29,6 +29,9 @@ export default {
     SET_USER(state, data) {
       state.user = data;
     },
+    SET_EMAIL(state, data) {
+      state.user.email = data;
+    },
     SET_ARCHIVE(state, data) {
       state.archive = data
     },
@@ -119,6 +122,18 @@ export default {
       commit("SET_DARKMODE", value);
       try {
         await axios.patch("api/darkmode", { darkmode: value });
+      } catch (e) {
+        alert(`Sei offline, l'impostazione non risulta correttamente inviata al server`)
+        commit("SET_TOKEN", null);
+        commit("SET_USER", null);
+        commit("SET_ARCHIVE", null);
+        commit("SET_DARKMODE", false)
+      }
+    },
+    async updateAccount({ commit }, credentials) {
+      try {
+        await axios.patch("api/update", { email: credentials.email, password: credentials.password });
+        if (credentials.email) { commit("SET_EMAIL", credentials.email); }
       } catch (e) {
         alert(`Sei offline, l'impostazione non risulta correttamente inviata al server`)
         commit("SET_TOKEN", null);

@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12">
         <DrawMap
-          v-show="!startedStopwatch && !startedCountdown && meters > 0"
+          v-show="!startedStopwatch && !startedCountdown"
           :coord="coord"
         />
       </v-col>
@@ -11,12 +11,7 @@
       <v-col class="text-center">
         <v-btn
           class="mr-4"
-          v-show="
-            authenticated &&
-              !startedStopwatch &&
-              !startedCountdown &&
-              meters > 0
-          "
+          v-show="authenticated && !startedStopwatch && !startedCountdown"
           v-on:click="
             saveRun($store.state.start.run);
             meters = 0;
@@ -26,7 +21,7 @@
         >
         <v-btn
           class="mr-4"
-          v-show="!startedStopwatch && !startedCountdown && meters > 0"
+          v-show="!startedStopwatch && !startedCountdown"
           v-on:click="
             reset();
             meters = 0;
