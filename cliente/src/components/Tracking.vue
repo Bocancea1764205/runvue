@@ -6,7 +6,9 @@
           block
           height="30vh"
           width="100%"
-          v-show="!startedCountdown && $store.state.start.run.meters === null"
+          v-show="
+            !startedCountdown && !!$store.state.start.run.meters === false
+          "
           color="success"
           x-large
           @click="
@@ -71,7 +73,7 @@
               block
               width="100%"
               height="10vh"
-              v-show="!startedStopwatch && !startedCountdown"
+              v-show="!startedStopwatch && !startedCountdown && meters > 0"
               v-on:click="
                 reset();
                 meters = 0;
