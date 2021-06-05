@@ -70,8 +70,8 @@
                         submit();
                         reset();
                       "
-                      ><v-icon dark left> mdi-content-save-edit </v-icon>Salva
-                      le modifiche</v-btn
+                      ><v-icon dark left> mdi-content-save-edit </v-icon
+                      >Salva</v-btn
                     >
                     <v-btn
                       v-show="emailchange || passwordchange"
