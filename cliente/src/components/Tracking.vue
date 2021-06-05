@@ -71,11 +71,7 @@
               block
               width="100%"
               height="10vh"
-              v-show="
-                !startedStopwatch &&
-                  !startedCountdown &&
-                  !!$store.state.start.run.path === true
-              "
+              v-show="!startedStopwatch && !startedCountdown && meters > 0"
               v-on:click="
                 reset();
                 meters = 0;
