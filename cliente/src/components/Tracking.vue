@@ -47,7 +47,12 @@
               block
               width="100%"
               height="10vh"
-              v-show="authenticated && !startedStopwatch && !startedCountdown"
+              v-show="
+                authenticated &&
+                  !startedStopwatch &&
+                  !startedCountdown &&
+                  meters > 0
+              "
               v-on:click="
                 saveRun($store.state.start.run);
                 reset();
@@ -66,7 +71,7 @@
               block
               width="100%"
               height="10vh"
-              v-show="!startedStopwatch && !startedCountdown"
+              v-show="!startedStopwatch && !startedCountdown && meters > 0"
               v-on:click="
                 reset();
                 meters = 0;
