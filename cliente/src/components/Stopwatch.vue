@@ -33,7 +33,7 @@ export default {
       if (
         !this.startedCountdown &&
         !this.startedStopwatch &&
-        this.$store.state.start.run.meters === null
+        !(this.$store.state.start.run.meters === null)
       ) {
         this.reset();
         return `${this.ore}:${this.minuti}:${this.secondi}.${this.decimi}`;
