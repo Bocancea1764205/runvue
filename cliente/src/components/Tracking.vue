@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12">
         <DrawMap
-          v-show="!startedStopwatch && !startedCountdown"
+          v-show="!startedStopwatch && !startedCountdown && meters > 0"
           :coord="coord"
         />
       </v-col>
@@ -11,17 +11,26 @@
       <v-col class="text-center">
         <v-btn
           class="mr-4"
-          v-show="authenticated && !startedStopwatch && !startedCountdown"
+          v-show="
+            authenticated &&
+              !startedStopwatch &&
+              !startedCountdown &&
+              meters > 0
+          "
           v-on:click="
             saveRun($store.state.start.run);
+            reset();
             meters = 0;
+            soglia = 0;
+            auxArray = [];
+            coord = [];
           "
           color="success"
           >Salva corsa</v-btn
         >
         <v-btn
           class="mr-4"
-          v-show="!startedStopwatch && !startedCountdown"
+          v-show="!startedStopwatch && !startedCountdown && meters > 0"
           v-on:click="
             reset();
             meters = 0;
