@@ -2,7 +2,7 @@
   <v-app>
     <Navigation />
     <v-main>
-      <v-container pa-0>
+      <v-container>
         <router-view></router-view>
       </v-container>
     </v-main>

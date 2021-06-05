@@ -25,8 +25,9 @@ router.patch(
 );
 
 router.patch(
-  "/api/update",
-  authController.update_account
+  "/api/updatePassword",
+  checkUser,
+  authController.update_password_patch
 );
 
 module.exports = router;

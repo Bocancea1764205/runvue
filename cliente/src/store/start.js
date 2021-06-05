@@ -16,9 +16,6 @@ export default {
     startedCountdown(state) {
       return state.startedCountdown;
     },
-    resettato(state) {
-      return !state.startedCountdown && !state.startedStopwatch && (state.run.meters === null || state.run.meters === 0);
-    },
     startedStopwatch(state) {
       return state.startedStopwatch;
     },

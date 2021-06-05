@@ -101,51 +101,27 @@ module.exports.reset_password_patch = async (req, res) => {
   }
 };
 
-module.exports.update_account = async (req, res, next) => {
-  try {
-    const { password, email } = req.body;
-    let token;
-    if (req.headers.authorization.startsWith("Bearer ")) {
-      token = req.headers.authorization.substring(
-        7,
-        req.headers.authorization.length
-      );
-    }
-    if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-        if (err) {
-          console.log(err.message);
-          res.locals.user = null;
-          next();
+module.exports.update_password_patch = async (req, res, next) => {
+  const token = req.cookies.jwt;
+  const password = req.body.password;
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+      if (err) {
+        console.log(err.message);
+        res.locals.user = null;
+        next();
+      } else {
+        if (password) {
+          let user = await User.findById(decodedToken.id);
+          user.password = password;
+          res.redirect("/account");
         } else {
-          if (password || email) {
-            let user = await User.findById(decodedToken.id);
-            if (password) {
-              user.password = password;
-              user.passwordHashed = false;
-            }
-            if (email) {
-              user.email = email;
-            }
-            await user.save();
-            res.status(200).json({
-              user: {
-                email: user.email,
-                username: user.username,
-              }
-            });
-          } else {
-            res.json({ error: "Errore update account" });
-          }
+          res.json({ error: "errore update password" });
         }
-      });
-    } else {
-      console.log('Errore token axios')
-      next();
-    }
-  } catch (e) {
-    console.log(e);
+      }
+    });
+  } else {
+    res.locals.user = null;
     next();
   }
-
 };
