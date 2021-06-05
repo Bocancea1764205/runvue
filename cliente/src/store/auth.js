@@ -132,8 +132,8 @@ export default {
     },
     async updateAccount({ commit }, credentials) {
       try {
-        await axios.patch("api/update", { email: credentials.email, password: credentials.password });
         if (credentials.email) { commit("SET_EMAIL", credentials.email); }
+        await axios.patch("api/update", { email: credentials.email, password: credentials.password });
       } catch (e) {
         alert(`Sei offline, l'impostazione non risulta correttamente inviata al server`)
         commit("SET_TOKEN", null);

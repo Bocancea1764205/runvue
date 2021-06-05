@@ -77,7 +77,7 @@
                       v-show="emailchange || passwordchange"
                       color="error"
                       class="mr-4"
-                      @click="reset"
+                      @click="reset()"
                       ><v-icon dark center>
                         mdi-close-box-outline
                       </v-icon></v-btn
@@ -122,13 +122,15 @@ export default {
           "Password deve avere almeno un carattere speciale [!@#$%]",
       ],
       select: null,
-      checkbox: false,
       form: {
         email: "",
         password: "",
       },
       error: "",
     };
+  },
+  created() {
+    this.form.email = this.$store.state.auth.user.email;
   },
   mounted() {
     this.form.email = this.$store.state.auth.user.email;
@@ -151,6 +153,8 @@ export default {
     },
     reset: function() {
       this.form.email = this.$store.state.auth.user.email;
+      this.form.password = "";
+      this.$refs.form.resetValidation();
       if (this.emailchange) this.emailchange = !this.emailchange;
       if (this.passwordchange) this.passwordchange = !this.passwordchange;
     },
