@@ -30,7 +30,11 @@ export default {
       return this.$store.state.start.startedCountdown;
     },
     tempo: function() {
-      if (this.startedCountdown && !this.startedStopwatch) {
+      if (
+        !this.startedCountdown &&
+        !this.startedStopwatch &&
+        this.$store.state.start.run.meters === null
+      ) {
         this.reset();
         return `${this.ore}:${this.minuti}:${this.secondi}.${this.decimi}`;
       }

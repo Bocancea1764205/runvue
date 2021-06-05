@@ -13,7 +13,6 @@
         <br />
 
         <Tracking />
-        <Countdown />
       </v-col>
     </v-row>
   </v-container>
@@ -21,14 +20,14 @@
 <script>
 import store from "../store";
 import Stopwatch from "@/components/Stopwatch";
-import Countdown from "@/components/Countdown";
+
 import Tracking from "@/components/Tracking";
 
 export default {
   store,
   components: {
     Stopwatch,
-    Countdown,
+
     Tracking,
   },
   data: () => ({

@@ -8,7 +8,6 @@
           width="100%"
           v-show="!startedCountdown && $store.state.start.run.meters === null"
           color="success"
-          elevation="11"
           x-large
           @click="
             reset();
@@ -22,7 +21,6 @@
           width="100%"
           v-show="startedCountdown"
           color="error"
-          elevation="11"
           x-large
           @click="
             if (startedCountdown) {
@@ -33,6 +31,9 @@
           ><v-icon size="150">mdi-stop</v-icon></v-btn
         >
       </v-col>
+      <v-col>
+        <Countdown />
+      </v-col>
       <v-col cols="12">
         <DrawMap
           v-show="!startedStopwatch && !startedCountdown && meters > 0"
@@ -41,44 +42,50 @@
       </v-col>
 
       <v-col class="text-center">
-        <v-btn
-          block
-          width="100%"
-          height="10vh"
-          v-show="
-            authenticated &&
-              !startedStopwatch &&
-              !startedCountdown &&
-              meters > 0
-          "
-          v-on:click="
-            saveRun($store.state.start.run);
-            reset();
-            meters = 0;
-            soglia = 0;
-            auxArray = [];
-            coord = [];
-          "
-          color="success"
-          ><h2>Salva corsa</h2></v-btn
-        >
-        <v-btn
-          block
-          width="100%"
-          height="10vh"
-          v-show="!startedStopwatch && !startedCountdown && meters > 0"
-          v-on:click="
-            reset();
-            meters = 0;
-            soglia = 0;
-            auxArray = [];
-            coord = [];
-          "
-          color="info"
-          ><h2>Resetta</h2></v-btn
-        >
+        <v-col>
+          <v-btn
+            block
+            width="100%"
+            height="10vh"
+            v-show="
+              authenticated &&
+                !startedStopwatch &&
+                !startedCountdown &&
+                meters > 0
+            "
+            v-on:click="
+              saveRun($store.state.start.run);
+              reset();
+              meters = 0;
+              soglia = 0;
+              auxArray = [];
+              coord = [];
+              realtimemeters = '';
+            "
+            color="success"
+            ><h2>Salva corsa</h2></v-btn
+          >
+        </v-col>
+        <v-col>
+          <v-btn
+            block
+            width="100%"
+            height="10vh"
+            v-show="!startedStopwatch && !startedCountdown && meters > 0"
+            v-on:click="
+              reset();
+              meters = 0;
+              soglia = 0;
+              auxArray = [];
+              coord = [];
+              realtimemeters = '';
+            "
+            color="info"
+            ><h2>Resetta</h2></v-btn
+          >
+        </v-col>
       </v-col>
-      <v-col cols="12" v-show="meters >= 0">
+      <v-col cols="12" v-show="meters > 0">
         <v-card class="text-center" elevation="11">
           <v-card-title class="text-h5"> </v-card-title>
           <v-card-text>
@@ -112,12 +119,14 @@ import { mapGetters, mapActions } from "vuex";
 import DrawMap from "@/components/DrawMap";
 import Vue from "vue";
 import mapboxgl from "mapbox-gl";
+import Countdown from "@/components/Countdown";
 Vue.use(geo);
 Vue.use(mapboxgl);
 export default {
   name: "Tracking",
   components: {
     DrawMap,
+    Countdown,
   },
   data: () => ({
     soglia: "",
