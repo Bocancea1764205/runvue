@@ -71,7 +71,7 @@
               block
               width="100%"
               height="10vh"
-              v-show="!startedStopwatch && !startedCountdown && meters > 0"
+              v-show="!startedStopwatch && !startedCountdown"
               v-on:click="
                 reset();
                 meters = 0;
