@@ -8,6 +8,7 @@ import Archivio from "../views/Archivio.vue";
 import Account from "../views/Account.vue";
 import Forgot from "../views/Forgot.vue";
 import Reset from "../views/Reset.vue";
+import About from "../views/About.vue";
 
 Vue.use(VueRouter);
 
@@ -20,11 +21,7 @@ const routes = [
   {
     path: "/about",
     name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    component: About,
   },
   {
     path: "/login",

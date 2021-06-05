@@ -1,51 +1,47 @@
 <template>
-  <v-container>
+  <v-container fluid pa-0 class="align-c">
     <v-row>
       <v-col>
-        <h1 class="text-center">Run</h1>
-        <v-divider></v-divider>
         <br />
-        <div class="text-center">
-          <h1>
-            <strong><Stopwatch /></strong>
+        <div class="text-center headline">
+          <h1 text="heading">
+            <Stopwatch />
           </h1>
         </div>
         <br />
-        <v-row class="text-center">
-          <v-col cols="12">
-            <v-btn
-              height="100px"
-              width="100px"
-              v-show="!startedCountdown"
-              color="success"
-              elevation="11"
-              x-large
-              @click="startCountdownHandling()"
-              ><v-icon dark size="60px">mdi-play</v-icon></v-btn
-            >
+        <v-container>
+          <v-row class="text-center">
+            <v-col>
+              <v-btn
+                block
+                height="30vh"
+                v-show="resettato"
+                depressed
+                color="success"
+                @click="startCountdownHandling()"
+                ><v-icon dark size="150">mdi-play</v-icon></v-btn
+              >
 
-            <v-btn
-              height="100px"
-              width="100px"
-              v-show="startedCountdown"
-              color="error"
-              elevation="11"
-              x-large
-              @click="
-                if (startedCountdown) {
-                  startCountdownHandling();
-                  if (startedStopwatch) startStopwatchHandling();
-                }
-              "
-              ><v-icon dark size="60px">mdi-stop</v-icon></v-btn
-            >
-          </v-col>
-        </v-row>
-        <br />
+              <v-btn
+                height="30vh"
+                block
+                depressed
+                v-show="startedCountdown"
+                color="error"
+                @click="
+                  if (startedCountdown) {
+                    startCountdownHandling();
+                    if (startedStopwatch) startStopwatchHandling();
+                  }
+                "
+                ><v-icon dark size="150">mdi-stop</v-icon></v-btn
+              >
+            </v-col>
+          </v-row>
+        </v-container>
 
         <Countdown />
 
-        <br />
         <Tracking />
       </v-col>
     </v-row>
@@ -76,6 +72,7 @@ export default {
       user: "auth/user",
       startedStopwatch: "start/startedStopwatch",
       startedCountdown: "start/startedCountdown",
+      resettato: "start/resettato",
     }),
   },
   methods: {

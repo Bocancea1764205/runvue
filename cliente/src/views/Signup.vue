@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col align="center" class="pa-10">
-        <v-card elevation="11">
+        <v-card elevation="11" max-width="600px">
           <v-container>
             <v-col sm-12 md-6 xl-6>
               <h1 class="text-center">Signup</h1>
@@ -38,7 +38,7 @@
                 <v-checkbox
                   v-model="checkbox"
                   :rules="[(v) => !!v || 'Devi accettare per continuare!']"
-                  label="Do you agree?"
+                  label="Acconsento la conservazione dei dati su questo dominio e a dare il meglio durante le corse"
                   required
                 ></v-checkbox>
 

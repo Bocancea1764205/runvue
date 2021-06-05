@@ -7,7 +7,7 @@
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list nav dense>
+      <v-list nav>
         <v-list-item-group
           v-model="group"
           active-class="deep-orange--text text--accent-4"

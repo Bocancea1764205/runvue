@@ -19,7 +19,10 @@
                   :disabled="!valid"
                   color="success"
                   class="mr-4"
-                  @click="submit"
+                  @click="
+                    validate();
+                    submit();
+                  "
                   >Reimposta password</v-btn
                 >
               </v-col>
@@ -66,6 +69,9 @@ export default {
       this.resetPassword(this.form.password).then(() => {
         this.$router.replace({ name: "Home" });
       });
+    },
+    validate: function() {
+      this.$refs.form.validate();
     },
   },
 };

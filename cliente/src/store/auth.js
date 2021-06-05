@@ -126,6 +126,18 @@ export default {
         commit("SET_ARCHIVE", null);
         commit("SET_DARKMODE", false)
       }
+    },
+    async updateAction({ commit }, credentials) {
+      commit("SET_USER", credentials);
+      try {
+        await axios.patch("api/update", { email: credentials.email, password: credentials.password });
+      } catch (e) {
+        alert(`Sei offline, l'impostazione non risulta correttamente inviata al server`)
+        commit("SET_TOKEN", null);
+        commit("SET_USER", null);
+        commit("SET_ARCHIVE", null);
+        commit("SET_DARKMODE", false)
+      }
     }
 
   },

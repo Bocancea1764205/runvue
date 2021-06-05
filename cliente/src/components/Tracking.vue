@@ -7,39 +7,61 @@
           :coord="coord"
         />
       </v-col>
+      <v-container>
+        <v-row>
+          <v-col>
+            <v-btn
+              block-inline
+              pa-0
+              depressed
+              width="100%"
+              height="10vh"
+              v-show="
+                authenticated &&
+                  !startedStopwatch &&
+                  !startedCountdown &&
+                  meters > 0
+              "
+              v-on:click="
+                saveRun($store.state.start.run);
+                reset();
+                meters = 0;
+                soglia = 0;
+                auxArray = [];
+                coord = [];
+                meters = 0;
+              "
+              color="success"
+              ><h1>Salva corsa</h1></v-btn
+            >
+          </v-col>
+          <v-col>
+            <v-btn
+              depressed
+              width="100%"
+              height="10vh"
+              block-inline
+              white
+              v-show="!startedStopwatch && !startedCountdown && meters > 0"
+              v-on:click="
+                reset();
+                meters = 0;
+                soglia = 0;
+                auxArray = [];
+                coord = [];
+              "
+              text--l
+              class="grey lighten-3 grey--text text--darken-3"
+              ><h1>
+                Resetta
+              </h1></v-btn
+            >
+          </v-col>
+        </v-row>
+      </v-container>
 
-      <v-col class="text-center">
-        <v-btn
-          class="mr-4"
-          v-show="
-            authenticated &&
-              !startedStopwatch &&
-              !startedCountdown &&
-              meters > 0
-          "
-          v-on:click="
-            saveRun($store.state.start.run);
-            meters = 0;
-          "
-          color="success"
-          >Salva corsa</v-btn
-        >
-        <v-btn
-          class="mr-4"
-          v-show="!startedStopwatch && !startedCountdown && meters > 0"
-          v-on:click="
-            reset();
-            meters = 0;
-            soglia = 0;
-            auxArray = [];
-            coord = [];
-          "
-          color="info"
-          >Resetta</v-btn
-        >
-      </v-col>
       <v-col cols="12" v-show="meters > 0">
-        <v-card class="text-center" elevation="11">
+        <v-card class="text-center">
           <v-card-title class="text-h5"> </v-card-title>
           <v-card-text>
             <v-row>
