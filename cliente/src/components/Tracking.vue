@@ -42,11 +42,11 @@
       </v-col>
       <v-container>
         <v-row>
-          <v-col cols="6">
+          <v-col cols="12">
             <v-btn
               block
               width="100%"
-              height="10vh"
+              height="7vh"
               v-show="
                 authenticated &&
                   !startedStopwatch &&
@@ -66,11 +66,11 @@
               ><h3>Salva</h3></v-btn
             >
           </v-col>
-          <v-col cols="6">
+          <v-col cols="12">
             <v-btn
               block
               width="100%"
-              height="10vh"
+              height="7vh"
               v-show="!startedStopwatch && !startedCountdown && meters > 0"
               v-on:click="
                 reset();
