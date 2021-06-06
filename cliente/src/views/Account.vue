@@ -11,7 +11,7 @@
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-row>
                   <v-col cols="6">
-                    <p>Email: {{ user.email }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
                   </v-col>
                   <v-col cols="6" align="right">
                     <v-btn
@@ -35,8 +35,8 @@
                 <v-row>
                   <v-col cols="6">
                     <p>
-                      Password:
-                      <span>••••••••</span>
+                      <strong>Password:</strong>
+                      <span> ••••••••</span>
                     </p>
                   </v-col>
                   <v-col cols="6" align="right">
@@ -70,7 +70,7 @@
                         submit();
                         reset();
                       "
-                      ><v-icon dark left> mdi-content-save-edit </v-icon
+                      ><v-icon dark left>mdi-content-save-edit </v-icon
                       >Salva</v-btn
                     >
                     <v-btn
@@ -78,9 +78,8 @@
                       color="error"
                       class="mr-4"
                       @click="reset()"
-                      ><v-icon dark center>
-                        mdi-close-box-outline
-                      </v-icon></v-btn
+                      ><v-icon dark left>mdi-close-box-outline </v-icon>
+                      Annulla</v-btn
                     >
                   </v-col>
                 </v-row>
@@ -96,68 +95,68 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-export default {
-  name: "Signup",
-  data: () => {
-    return {
-      valid: false,
-      emailchange: false,
-      passwordchange: false,
-      modify: false,
-      emailRules: [
-        (v) => !!v || "E-mail obbligatoria",
-        (v) => /.+@.+\..+/.test(v) || "E-mail deve essere valida",
-      ],
-      pwRules: [
-        (v) => !!v || "Password obbligatoria",
-        (v) =>
-          (v && v.length <= 15) ||
-          "Password deve contenere meno di 15 caratteri",
-        (v) =>
-          /(?=.*[A-Z])/.test(v) || "Password deve avere almeno una maiuscola",
-        (v) => /(?=.*\d)/.test(v) || "Password deve avere almeno un numero",
-        (v) =>
-          /([!@$%])/.test(v) ||
-          "Password deve avere almeno un carattere speciale [!@#$%]",
-      ],
-      select: null,
-      form: {
-        email: "",
-        password: "",
-      },
-      error: "",
-    };
-  },
-  created() {
-    this.form.email = this.$store.state.auth.user.email;
-  },
-  mounted() {
-    this.form.email = this.$store.state.auth.user.email;
-  },
-  computed: {
-    ...mapGetters({
-      authenticated: "auth/authenticated",
-      user: "auth/user",
-    }),
-  },
-  methods: {
-    ...mapActions({
-      updateAccount: "auth/updateAccount",
-    }),
-    submit() {
-      this.updateAccount(this.form);
+  import { mapActions, mapGetters } from "vuex";
+  export default {
+    name: "Signup",
+    data: () => {
+      return {
+        valid: false,
+        emailchange: false,
+        passwordchange: false,
+        modify: false,
+        emailRules: [
+          (v) => !!v || "E-mail obbligatoria",
+          (v) => /.+@.+\..+/.test(v) || "E-mail deve essere valida",
+        ],
+        pwRules: [
+          (v) => !!v || "Password obbligatoria",
+          (v) =>
+            (v && v.length <= 15) ||
+            "Password deve contenere meno di 15 caratteri",
+          (v) =>
+            /(?=.*[A-Z])/.test(v) || "Password deve avere almeno una maiuscola",
+          (v) => /(?=.*\d)/.test(v) || "Password deve avere almeno un numero",
+          (v) =>
+            /([!@$%])/.test(v) ||
+            "Password deve avere almeno un carattere speciale [!@#$%]",
+        ],
+        select: null,
+        form: {
+          email: "",
+          password: "",
+        },
+        error: "",
+      };
     },
-    validate: function() {
-      this.$refs.form.validate();
-    },
-    reset: function() {
+    created() {
       this.form.email = this.$store.state.auth.user.email;
-      this.form.password = "";
-      this.$refs.form.resetValidation();
-      if (this.emailchange) this.emailchange = !this.emailchange;
-      if (this.passwordchange) this.passwordchange = !this.passwordchange;
     },
-  },
-};
+    mounted() {
+      this.form.email = this.$store.state.auth.user.email;
+    },
+    computed: {
+      ...mapGetters({
+        authenticated: "auth/authenticated",
+        user: "auth/user",
+      }),
+    },
+    methods: {
+      ...mapActions({
+        updateAccount: "auth/updateAccount",
+      }),
+      submit() {
+        this.updateAccount(this.form);
+      },
+      validate: function() {
+        this.$refs.form.validate();
+      },
+      reset: function() {
+        this.form.email = this.$store.state.auth.user.email;
+        this.form.password = "";
+        this.$refs.form.resetValidation();
+        if (this.emailchange) this.emailchange = !this.emailchange;
+        if (this.passwordchange) this.passwordchange = !this.passwordchange;
+      },
+    },
+  };
 </script>
